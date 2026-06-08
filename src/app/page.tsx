@@ -1,5 +1,5 @@
 import Image from "next/image";
-import HeroSlider from "./components/slider/HeroSlider";
+import HeroSlider from "../components/slider/HeroSlider";
 
 
 export default function Home() {

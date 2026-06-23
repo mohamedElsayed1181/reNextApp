@@ -43,13 +43,20 @@ const Navbar = () => {
 
               <li>
                 <Link
-                  href="/categories"
+                  href="/category"
                   className="text-gray-500 transition hover:text-gray-700"
                 >
                   Categories
                 </Link>
               </li>
-
+ <li>
+                <Link
+                  href="/subcategory"
+                  className="text-gray-500 transition hover:text-gray-700"
+                >
+                  SubCategory
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/brands"

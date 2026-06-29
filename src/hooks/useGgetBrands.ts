@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllBrands } from "../http/barnds/brands.httsp";
 
-export const useGetAllBrands = () => {
+export const useGetAllBrands = ({ page }: { page: number }) => {
   return useQuery({
-    queryKey: ["brands"],
-    queryFn: getAllBrands,
+    queryKey: ["brands", page],
+    queryFn: () => getAllBrands({ page }),
   });
 };

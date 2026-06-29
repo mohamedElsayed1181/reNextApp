@@ -1,42 +1,53 @@
 "use client";
 
+import { useState } from "react";
 import { useGetAllBrands } from "@/src/hooks/useGgetBrands";
+
 import Image from "next/image";
 import Link from "next/link";
 
+import Pagination from "../Pagination/Pagination";
+
 export default function Brands() {
-  const { data, error, isLoading } = useGetAllBrands();
+  const [page, setPage] = useState(1);
+
+  const { data, error, isLoading } = useGetAllBrands({ page });
 
   if (isLoading) {
-    return <div className="text-center mt-10">Loading Brands...</div>;
+    return <div>Loading Brands...</div>;
   }
 
   if (error) {
-    return (
-      <div className="text-center mt-10 text-red-500">Something went wrong</div>
-    );
+    return <div>Something went wrong</div>;
   }
 
   return (
     <section className="p-5">
       <h2 className="text-2xl font-bold mb-6">Brands</h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {data?.map((brand) => (
+      <div
+        className="
+grid 
+grid-cols-2 
+md:grid-cols-3 
+lg:grid-cols-4 
+gap-5
+"
+      >
+        {data?.data.map((brand) => (
           <Link
-            href={`/brands/${brand._id}`}
             key={brand._id}
+            href={`/brands/${brand._id}`}
             className="
-              border
-              rounded-xl
-              p-5
-              flex
-              flex-col
-              items-center
-              gap-3
-              hover:shadow-lg
-              transition
-            "
+border
+rounded-xl
+p-5
+flex
+flex-col
+items-center
+gap-3
+hover:shadow-lg
+"
           >
             <Image
               src={brand.image}
@@ -44,18 +55,24 @@ export default function Brands() {
               width={96}
               height={96}
               className="
-    w-24
-    h-24
-    object-contain
-  "
+w-24
+h-24
+object-contain
+"
             />
 
-            <h3 className="font-semibold text-lg">{brand.name}</h3>
+            <h3>{brand.name}</h3>
 
-            <p className="text-gray-500 text-sm">{brand.slug}</p>
+            <p>{brand.slug}</p>
           </Link>
         ))}
       </div>
+
+      <Pagination
+        currentPage={data?.metadata.currentPage ?? 1}
+        totalPages={data?.metadata.numberOfPages ?? 1}
+        onPageChange={setPage}
+      />
     </section>
   );
 }
